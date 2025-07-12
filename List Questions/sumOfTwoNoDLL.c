@@ -1,133 +1,99 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Node structure
-
 struct node {
     int info;
     struct node *lptr;
     struct node *rptr;
 };
+struct node *first1 = NULL, *tail1 = NULL;
+struct node *first2 = NULL, *tail2 = NULL;
+struct node *first3 = NULL, *tail3 = NULL;
 
-// Head and tail pointers for 3 linked lists
-struct node *head1 = NULL, *tail1 = NULL;
-struct node *head2 = NULL, *tail2 = NULL;
-struct node *head3 = NULL, *tail3 = NULL;
+struct node* createNode(int info) {
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->info = info;
+    newNode->lptr = NULL;
+    newNode->rptr = NULL;
+    return newNode;
+}
 
-// Insert into List 1
-void insertNodeList1(int info) {
-    struct node *newnode = (struct node*) malloc(sizeof(struct node));
-    newnode->info = info;
-    newnode->lptr = NULL;
-    newnode->rptr = NULL;
-
-    if (head1 == NULL) {
-        head1 = tail1 = newnode;
+void insertNode(struct node **first1,struct node **tail1, int info) {
+    struct node *newNode = createNode(info);
+    if (*first1 == NULL) {
+        *first1 = *tail1 = newNode;
     } else {
-        tail1->rptr = newnode;
-        newnode->lptr = tail1;
-        tail1 = newnode;
+        (*tail1)->rptr = newNode;
+        newNode->lptr = *tail1;
+        *tail1 = newNode;
     }
 }
 
-// Insert into List 2
-void insertNodeList2(int info) {
-    struct node *newnode = (struct node*) malloc(sizeof(struct node));
-    newnode->info = info;
-    newnode->lptr = NULL;
-    newnode->rptr = NULL;
+void twoSum(){
+    int carry = 0;
+    while (tail1 != NULL || tail2 != NULL || carry!=0) {
+        int val1 = (tail1 != NULL) ? tail1->info : 0;
+        int val2 = (tail2 != NULL) ? tail2->info : 0;
 
-    if (head2 == NULL) {
-        head2 = tail2 = newnode;
-    } else {
-        tail2->rptr = newnode;
-        newnode->lptr = tail2;
-        tail2 = newnode;
+        int sum = val1 + val2 + carry;
+        carry = sum / 10;
+
+        insertNode(&first3,&tail3,sum%10);
+
+        if (tail1 != NULL) tail1 = tail1->lptr;
+        if (tail2 != NULL) tail2 = tail2->lptr;
     }
+
 }
-
-// Insert into List 3
-void insertNodeList3() {
-    struct node *newnode = (struct node*) malloc(sizeof(struct node));
-    newnode->info = 0;
-    newnode->lptr = NULL;
-    newnode->rptr = NULL;
-
-    if (head3 == NULL) {
-        head3 = tail3 = newnode;
-    } else {
-        tail3->rptr = newnode;
-        newnode->lptr = tail3;
-        tail3 = newnode;
+void display(struct node *first1) {
+    struct node* temp = first1;
+    if (temp == NULL) {
+        printf("The list is empty.\n");
+        return;
     }
-}
-
-void sumNode(){
-    int rem =0 , sum = 0 , val=0;
-    while (tail3 != NULL )
-    {
-        sum = tail1->info + tail2->info + val;
-        if (sum>9)
-        {
-            if (tail3 == head3)
-            {
-                tail3->info = sum;
-                break;
-            }
-                tail3->info = sum % 10;
-                val = sum / 10;
-                // val = 0;
-                // sum = 0;
-        }
-        else{
-            tail3->info = sum;
-        }
-        tail3 = tail3->lptr;
-        tail1 = tail1->lptr;
-        tail2 = tail2->lptr;
-    }
-    
-
-    
-}
-
-// Print any list
-void printList(struct node *head) {
-    struct node *temp = head;
     while (temp != NULL) {
-        printf("%d ", temp->info);
+        printf("%d\t", temp->info);
         temp = temp->rptr;
+    }
+    printf("\n");
+}
+void displayResult(struct node *first1) {
+    struct node* temp = first1;
+    while (temp->rptr != NULL) {
+        temp = temp->rptr;
+    }
+    if (temp == NULL) {
+        printf("The list is empty.\n");
+        return;
+    }
+    while (temp != NULL) {
+        printf("%d\t", temp->info);
+        temp = temp->lptr;
     }
     printf("\n");
 }
 
 int main() {
-    // Inserting dynamically into all 3 lists
-    insertNodeList1(4);
-    insertNodeList1(5);
-    insertNodeList1(9);
 
-    insertNodeList2(7);
-    insertNodeList2(8);
-    insertNodeList2(8);
+    insertNode(&first1,&tail1, 1);
+    insertNode(&first1,&tail1, 2);
+    insertNode(&first1,&tail1, 3);
+    insertNode(&first1,&tail1, 4);
 
-    // insertNodeList3(15);
-    // insertNodeList3(25);
-    // insertNodeList3(35);
-    insertNodeList3();
-    insertNodeList3();
-    insertNodeList3();
+    insertNode(&first2,&tail2, 1);
+    insertNode(&first2,&tail2, 2);
+    insertNode(&first2,&tail2, 3);
+    insertNode(&first2,&tail2, 4);
+    insertNode(&first2,&tail2, 6);
+    insertNode(&first2,&tail2, 5);
 
-    sumNode();
-    // Printing all 3 lists
-    printf("List 1: ");
-    printList(head1);
+    // insertNode(&first3,&tail3, 0);
 
-    printf("List 2: ");
-    printList(head2);
+    twoSum();
 
-    printf("List 3: ");
-    printList(head3);
+    display(first1);
+    display(first2);
+    displayResult(first3);
 
     return 0;
 }
