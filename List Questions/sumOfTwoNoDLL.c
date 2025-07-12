@@ -28,6 +28,17 @@ void insertNode(struct node **first1,struct node **tail1, int info) {
         *tail1 = newNode;
     }
 }
+void insertAtFront(struct node **first, struct node **tail, int info) {
+    struct node *newNode = createNode(info);
+    if (*first == NULL) {
+        *first = *tail = newNode;
+    } else {
+        newNode->rptr = *first;
+        (*first)->lptr = newNode;
+        *first = newNode;
+    }
+}
+
 
 void twoSum(){
     int carry = 0;
@@ -43,10 +54,27 @@ void twoSum(){
         if (tail1 != NULL) tail1 = tail1->lptr;
         if (tail2 != NULL) tail2 = tail2->lptr;
     }
+    
+}
+int getLength(struct node* head) {
+    int length = 0;
+    while (head != NULL) {
+        length++;
+        head = head->rptr;
+    }
+    return length;
+}
 
+void padWithZeroes(struct node **first, struct node **tail, int numZeroes) {
+    for (int i = 0; i < numZeroes; i++) {
+        insertAtFront(first, tail, 0);
+    }
 }
 void display(struct node *first1) {
     struct node* temp = first1;
+    struct node* temp2 = first3;
+    struct node* prev = first3;
+    struct node* temp3 = tail3;
     if (temp == NULL) {
         printf("The list is empty.\n");
         return;
@@ -55,6 +83,7 @@ void display(struct node *first1) {
         printf("%d\t", temp->info);
         temp = temp->rptr;
     }
+
     printf("\n");
 }
 void displayResult(struct node *first1) {
@@ -75,6 +104,7 @@ void displayResult(struct node *first1) {
 
 int main() {
 
+    int len1 , len2;
     insertNode(&first1,&tail1, 1);
     insertNode(&first1,&tail1, 2);
     insertNode(&first1,&tail1, 3);
@@ -88,6 +118,16 @@ int main() {
     insertNode(&first2,&tail2, 5);
 
     // insertNode(&first3,&tail3, 0);
+    len1 = getLength(first1);
+    len2 = getLength(first2);
+
+    if (len1>len2)
+    {
+        padWithZeroes(&first2 ,&tail2 , len1-len2);
+    }else
+    {
+        padWithZeroes(&first1 ,&tail1 , len2-len1);
+    }
 
     twoSum();
 
