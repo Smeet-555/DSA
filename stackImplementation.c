@@ -10,10 +10,11 @@ void push(int value) {
     } else {
         top++;
         s[top] = value;
-        printf("%d  ", value);
+        printf("Pushed: %d\n", value);
     }
 }
-int pop(){
+
+int pop() {
     if (top == -1) {
         printf("Stack underflow\n");
         return -1;
@@ -23,63 +24,90 @@ int pop(){
         return val;
     }
 }
-void disply(){
-    if(top == -1){
-        printf("Stack is empty:\n");
-    }else{
-        printf("your Stack is : ");
-        for(int i=top;i>=0;i--){
-            printf("%d  ",s[i]);
+
+void display() {
+    if (top == -1) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Stack: ");
+        for (int i = top; i >= 0; i--) {
+            printf("%d ", s[i]);
         }
+        printf("\n");
     }
 }
-int peep(int i){
-    if(top - i + 1 < 0){
-        printf("Stack is underflow :");
-    }else{
+
+int peep(int i) {
+    if (top - i + 1 < 0) {
+        printf("Stack underflow\n");
+        return -1;
+    } else {
         return s[top - i + 1];
     }
 }
-void main()
-{
-    int n;
-    printf("Enter 1 to call push method in stack :\n");
-    printf("Enter 2 to call pop method in stack :\n");
-    printf("Enter 3 to call disply method in stack :\n");
-    printf("Enter 4 to call peep method in stack :\n");
-    printf("Enter 5 to call change method in stack :\n");
-    printf("Enter your choice :");
-    scanf("%d", &n);
 
-    if (n == 1)
-    {
-        push(12);
-        push(13);
-        push(14);
-        return;
+void change(int i, int value) {
+    if (top - i + 1 < 0) {
+        printf("Invalid position\n");
+    } else {
+        s[top - i + 1] = value;
+        printf("Changed element %d from top to %d\n", i, value);
     }
-     if (n == 2)
-    {
-        push(12);
-        push(13);
-        push(14);
-        printf("Popped: %d\n", pop());
-        return;
-    }
-    if(n == 3){
-        push(5);
-        push(10);
-        push(12);
-        disply();
-        return;
-    }if(n == 4){
-        int i;
-        printf("Enter a number of peep element:");
-        scanf("%d",&i);
-        push(5);
-        push(10);
-        push(15);
-        peep(i);
-    }
+}
 
+void main() {
+    int choice;
+    while (1) {
+        printf("\n\n--- Stack Menu ---\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Display\n");
+        printf("4. Peep\n");
+        printf("5. Change\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        int value, i;
+        switch (choice) {
+            case 1:
+                printf("Enter value to push: ");
+                scanf("%d", &value);
+                push(value);
+                break;
+
+            case 2:
+                value = pop();
+                if (value != -1)
+                    printf("Popped value: %d\n", value);
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                printf("Enter i-th element from top to peep: ");
+                scanf("%d", &i);
+                value = peep(i);
+                if (value != -1)
+                    printf("Peeped value: %d\n", value);
+                break;
+
+            case 5:
+                printf("Enter i-th element from top to change: ");
+                scanf("%d", &i);
+                printf("Enter new value: ");
+                scanf("%d", &value);
+                change(i, value);
+                break;
+
+            case 6:
+                printf("Exiting...\n");
+                return;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }
 }
