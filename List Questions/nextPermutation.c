@@ -1,10 +1,9 @@
 #include <stdio.h>
 
 int main() {
-    int arr[3] = {3,2,1};
+    int arr[3] = {2,3,1};
     int n = sizeof(arr) / sizeof(arr[0]);
     int index = -1;
-
 
     for (int i = n - 2; i >= 0; i--) {
         if (arr[i] < arr[i + 1]) {
@@ -41,7 +40,7 @@ int main() {
     }
 
     printf("Next permutation: ");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < 3; i++) {
         printf("%d ", arr[i]);
     }
 
