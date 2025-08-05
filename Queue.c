@@ -13,7 +13,7 @@ void enque(int val , int size , int queue[]){
 void dequeue(int size , int queue[]){
     if (r == f)
     {
-        printf("queue overflow");
+        printf("queue underflow");
     }
     f++;
 }
