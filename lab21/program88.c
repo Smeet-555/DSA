@@ -21,16 +21,32 @@ int binarySearch(int arr[], int size, int target) {
     }
     return -1;  
 }
-int main() {
-    // int numbers[] = {1, 3, 5, 7, 9, 11, 13};
-    // int size = sizeof(numbers) / sizeof(numbers[0]);
-    // int target = 7;
 
+// recursive approach
+int binarySearchRecursive(int arr[], int low, int high, int target) {
+    if (low > high) {
+        return -1; 
+    }
+
+    int mid = low + (high - low) / 2;
+
+    if (arr[mid] == target) {
+        return mid; 
+    }
+    else if (arr[mid] < target) {
+        return binarySearchRecursive(arr, mid + 1, high, target);  
+    }
+    else {
+        return binarySearchRecursive(arr, low, mid - 1, target);  
+    }
+}
+
+int main() {
     int size;
     printf("Enter size of array : ");
     scanf("%d",&size);
     int arr[size];
-    printf("Enter elements of array : \n");
+    printf("Enter elements of array (sorted): \n");
     for (int i = 0; i < size; i++)
     {
         scanf("%d",&arr[i]);
@@ -40,12 +56,22 @@ int main() {
     printf("Enter target : ");
     scanf("%d",&target);
 
-    int result = binarySearch(arr, size, target);
+    // Iterative approach
+    int iterartiveResult = binarySearch(arr, size, target);
 
-    if (result != -1) {
-        printf("Element found at index %d\n", result);
+    if ( iterartiveResult!= -1) {
+        printf("[Iterative] Element found at index %d\n", iterartiveResult);
     } else {
-        printf("Element not found\n");
+        printf("[Iterative] Element not found\n");
+    }
+
+    // Recursive approach
+    int iterartiveResult = binarySearchRecursive(arr, 0, size - 1, target);
+
+    if (iterartiveResult != -1) {
+        printf("[Recursive] Element found at index %d\n", iterartiveResult);
+    } else {
+        printf("[Recursive] Element not found\n");
     }
 
     return 0;
