@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 int main()
 {
     int m, n;
@@ -7,28 +8,29 @@ int main()
     scanf("%d %d", &m, &n);
 
     int arr[m][n];
-
     int new_arr[n][m];
 
-    printf("Enter the elements of array: ");
-    for(int i=0; i<m; i++ ){
-        for (int j = 0; j< n; j++)
+    printf("Enter the elements of array:\n");
+
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
         {
-            printf("Enter the element at %d,%d: " , i,j);
+            printf("Enter the element at %d,%d: ", i, j);
             scanf("%d", &arr[i][j]);
         }
     }
 
-    for (int i = n-1; i >=0; i--)
+    for (int i = 0; i < m; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = 0; j < n; j++)
         {
-            new_arr[j][n-1-i] = arr[i][j];
+            new_arr[j][m - 1 - i] = arr[i][j];
         }
-        
     }
-    
-    printf("The new array is: \n");
+
+    printf("\nThe new array is:\n");
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -38,4 +40,5 @@ int main()
         printf("\n");
     }
 
-}   
+    return 0;
+}
